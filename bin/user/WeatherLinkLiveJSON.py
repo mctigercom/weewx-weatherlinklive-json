@@ -183,6 +183,9 @@ class WeatherLinkLiveJSONDriver(weewx.drivers.AbstractDevice):
                         windchill = s['wind_chill']
                         windSpeed = s['wind_speed_last']
                         windDir = s['wind_dir_last']
+                        solarradiation = s['solar_rad']
+                        uvindex = s['uv_index']
+                        rainrate = s['rain_rate_last']
                         # rainRate
                     elif s['data_structure_type'] == 2 :
                         # temp_1 to 4
@@ -192,7 +195,8 @@ class WeatherLinkLiveJSONDriver(weewx.drivers.AbstractDevice):
                         # trans_battery_flag
                         pass
                     elif s['data_structure_type'] == 3 :
-                        # bar_sea_level
+                        barometer = s['bar_sea_level']
+                        barometerrate = s['bar_trend']
                         # bar_absolute
                         pass
                     elif s['data_structure_type'] == 4 :
@@ -213,10 +217,16 @@ class WeatherLinkLiveJSONDriver(weewx.drivers.AbstractDevice):
                            'windchill': windchill,
                            'windSpeed' : windSpeed,
                            'windDir' : windDir,
+                           'radiation' : solarradiation,
+						   'UV' : uvindex,
+						   'rainRate' : rainrate,
+						   'barometer' : barometer,
+						   'barometerRate' : barometerrate,
                            'inTemp':  inTemp,
                            'inHumidity':  inHumidity,
                            'inDewpoint' : dewpoint,
                            }
+
                 yield _packet
                 if self.poll_interval:
                     time.sleep(self.poll_interval)
